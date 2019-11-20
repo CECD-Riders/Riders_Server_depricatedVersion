@@ -1,11 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
-    <title>경기 일정 및 결과</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <link rel="stylesheet" , href="/CSS/index.css">
+    <title>메인</title>
 </head>
+
 <body>
-    <h1>경기 일정 및 결과 페이지 입니다.</h1>
-    <hr>
+    <div class="leftside">
+        <div class="sidebar-logo">
+            <a href="/">
+                <i class="fas fa-basketball-ball fa-2x"></i>
+            </a>
+            <a href="/">
+                <h1>POTG</h1>
+            </a>
+        </div>
+
+        <div class="sidebar-bdd"></div>
+
+        <ul class="sidebar-menu">
+            <li>
+                <a href="/">
+                    <i class="fas fa-home"></i>
+                    <span>홈</span>
+                </a>
+            </li>
+            <li>
+                <a href="/watch">
+                    <i class="far fa-play-circle"></i>
+                    <span>영상 보기</Video></span>
+                </a>
+            </li>
+
+            <li>
+                <a href="/gameList">
+                    <i class="far fa-calendar-minus"></i>
+                    <span>경기 일정/결과</Video></span>
+                </a>
+            </li>
+
+            <li>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">
+                    <i class="fas fa-upload"></i>
+                    <span>동영상 업로드</Video></span>
+                </a>
+            </li>
+            
+            <li>
+                <a sec:authorize="isAnonymous()" th:href="@{/user/login}">
+                    <i class="fas fa-upload"></i>
+                    <span>로그인</Vieo></span>
+                </a>
+            </li>
+            
+            <li>
+                <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">
+                    <i class="fas fa-upload"></i>
+                    <span>로그아웃</Vieo></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    
+    <div class="head">
+        <div class="head-nav">
+            <div class="head-search">
+                <input type="text" placeholder="Search for..">
+                <button>
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <!--nav user info-->
+    </div>
+
+
+
+    <div class="content">
+        <div class="content-head">
+            <h3>경기 일정/결과</h3>
+            
+        </div>
+        <div class="content-record">
+            <!--크롤링-->
+            
+            <div th:each="dayGame : ${GameList}">
+            <div class="sch_tb ">
+                <table cellspacing="0" border="1">
+                    <colgroup>
+                        <col width="100">
+                        <col width="55">
+                        <col width = 400>
+                        <col width="166">
+                        <col width="250">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            
+                            <td th:rowspan="${dayGame.getGameList().size()+1}"><span class="td_date" th:text="${dayGame.date}"></span></td>
+                        </tr> 
+                           
+                        <div th:each="game : ${dayGame.gameList}">  
+                        	<tr>
+                            	<td><span class="td_hour" th:text="${game.time}"></span></td>
+                           		<td><span class="team_lft" th:text="${game.leftTeam}"></span>
+                                        <strong class="td_score" th:text="${game.score}"></strong>
+                                <span class="team_rgt" th:text="${game.rightTeam}"></span>
+                            	</td>
+                            	<td>
+                                <span class="td_btn">
+                                	<a th:href="@{/watch}">
+                                    	<img width="61" height="23" alt="경기영상" src="https://imgsports.pstatic.net/images/section/volleyball/css/btn_vod_off.gif">
+                                	</a>
+                                </span>
+                            	</td>
+                            	<td>
+                                	<span class="td_stadium" th:text="${game.stadium}"></span>
+                            	</td>
+                        	</tr>
+                        </div>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            <!--END 크롤링-->
+        </div>
+    </div>
+
+    <div class="bottom">
+        <div>Copyright © Team Riders 2019</div>
+    </div>
+
 </body>
+
 </html>
