@@ -99,18 +99,6 @@ public class MyController {
         return "/security/login";
     }
 
-    // 로그인 결과 페이지
-    @GetMapping("/user/login/result")
-    public String dispLoginResult() {
-        return "/loginSuccess";
-    }
-
-    // 로그아웃 결과 페이지
-    @GetMapping("/user/logout/result")
-    public String dispLogout() {
-        return "/logout";
-    }
-
     // 접근 거부 페이지
     @GetMapping("/user/denied")
     public String dispDenied() {

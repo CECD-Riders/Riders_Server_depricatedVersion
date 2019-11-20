@@ -46,15 +46,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/user/login")
                 .failureUrl("/user/login?error")
-                .defaultSuccessUrl("/user/login/result")
+                //.defaultSuccessUrl("/user/login/result")		//로그인 성공 url====> 메인으로 이동!
+                .defaultSuccessUrl("/")
                 .permitAll()
                 .and() // 로그아웃 설정
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                .logoutSuccessUrl("/user/logout/result")
+                .logoutSuccessUrl("/")		//로그아웃시=========> 메인으로 이동!
                 .invalidateHttpSession(true)
                 .and()
-                // 403 예외처리 핸들링
+                // 403 예외처리 핸들링(접근권한이 없는 페이지를 접근하면 일로 보내버림)
                 .exceptionHandling().accessDeniedPage("/user/denied");
     }
 
