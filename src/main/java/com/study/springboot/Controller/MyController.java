@@ -1,4 +1,4 @@
-package com.study.springboot;
+package com.study.springboot.Controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,11 +77,17 @@ public class MyController {
 
     // 회원가입 처리
     @PostMapping("/user/signup")
-    public String execSignup(MemberDto memberDto, Model model) {
+    public String execSignup(HttpServletRequest request, MemberDto memberDto, Model model) {
+    	if(memberDto.getEmail().isEmpty()) {
+    		model.addAttribute("errorMsg", "아이디를 입력해 주십시오.");
+    		return "/signup";
+    	}else if(memberDto.getPassword().isEmpty()) {
+    		model.addAttribute("errorMsg", "비밀번호를 입력해 주십시오.");
+    		return "/signup";
+    	}
         Long id = memberService.joinUser(memberDto);
-        System.out.println(id);
         if(id == -1) {//아이디 중복인 경우 => 다시 회원가입 창으로 보내주고 아이디 중복이라고 말해주자
-        	model.addAttribute("idOverlap", "중복된 아이디가 있습니다!");
+        	model.addAttribute("errorMsg", "중복된 아이디가 있습니다!");
         	System.out.println("YES");
         	return "/signup";
         }
@@ -96,7 +102,7 @@ public class MyController {
     	if(error != null) {//로그인 실패 상황
     		model.addAttribute("loginFailureError", "로그인 실패");
     	}
-        return "/security/login";
+        return "/login";
     }
 
     // 접근 거부 페이지

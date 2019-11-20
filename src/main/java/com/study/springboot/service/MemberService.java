@@ -27,6 +27,14 @@ import lombok.AllArgsConstructor;
 public class MemberService implements UserDetailsService {
     private MemberRepository memberRepository;
 
+    @Transactional
+    public Long overlapCheck(String email) {
+    	if(memberRepository.findByEmail(email).isPresent())
+        	return new Long(-1);
+    	else
+    		return new Long(1);
+    }
+    
     //회원가입
     @Transactional
     public Long joinUser(MemberDto memberDto) {
