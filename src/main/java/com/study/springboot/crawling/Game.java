@@ -8,9 +8,10 @@ public class Game {
 	String leftTeam;
 	String rightTeam;
 	String score;
+	String stadium;
 	
 	public Game() {}; 	
-	public Game(String t, String lf, String rt,String sc) {
-		time = t; leftTeam = lf; rightTeam = rt; score = sc;
+	public Game(String t, String lf, String rt,String sc,String stad) {
+		time = t; leftTeam = lf; rightTeam = rt; score = sc; stadium = stad;
 	}
 }

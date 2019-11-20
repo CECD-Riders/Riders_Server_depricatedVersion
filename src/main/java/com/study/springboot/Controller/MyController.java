@@ -2,6 +2,7 @@ package com.study.springboot.Controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,12 @@ public class MyController {
     // 메인 페이지
     @GetMapping("/")
     public String index(Model model) {
-        String url = "https://sports.news.naver.com/basketball/schedule/index.nhn?year=2019&month=11&category=nba#";
+    	Calendar cal = Calendar.getInstance();
+        String url = "https://sports.news.naver.com/basketball/schedule/index.nhn?"
+        		+ "year=" + cal.get(Calendar.YEAR) 
+        		+"&month=" + (cal.get(Calendar.MONTH) + 1) 
+        		+"&category=nba#";
+
         Document doc = null;
         List<DayGame> gameList = new ArrayList<DayGame>();
         
@@ -40,33 +46,34 @@ public class MyController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Elements evenGames = doc.select("div.sch_tb2");
-        for(Element eg: evenGames) {
+        Elements todayGame = doc.select("div.sch_tb2.selected");
+        //System.out.println(todayGame);
+        for(Element eg: todayGame) {
         	List<Game> list = new ArrayList<Game>();
         	String date = eg.select("span.td_date").text();		//경기 날짜     	
-        	System.out.println("---------------------------<날짜 : " + date+ ">---------------------------");
         	for(Element g: eg.select("tr")) {
-        		String gameInfo = "경기 시간 : " 
-        				+g.select("span.td_hour").text() +" ===> "
-        				+ g.select("span.team_lft").text() + " " 
-        				+ g.select("strong.td_score").text() + " " 
-        				+g.select("span.team_rgt").text();
-        		System.out.println(gameInfo);
-        		
         		list.add(new Game(g.select("span.td_hour").text(),
         				g.select("span.team_lft").text(),
         				g.select("span.team_rgt").text(),
-        				g.select("strong.td_score").text()));
+        				g.select("strong.td_score").text(),
+        				g.select("span.td_stadium").text()));
         	}
         	gameList.add(new DayGame(date,list));
         }
-        model.addAttribute("MonthGame", gameList);
+        System.out.println(gameList.get(0).getGameList().size());
+        model.addAttribute("gameSize", gameList.get(0).getGameList().size() + 1);
+        model.addAttribute("todayGame", gameList.get(0));
         return "/index";
     }
     
     @RequestMapping("/watch")
     public String watchVideo() {
     	return "/watchVideo";
+    }
+    
+    @RequestMapping("/gameList")
+    public String gameList() {
+    	return "/scheduleAndresults";
     }
     
     // 회원가입 페이지
