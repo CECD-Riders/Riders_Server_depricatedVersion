@@ -78,7 +78,7 @@ public class MyController {
         		+ "year=" + cal.get(Calendar.YEAR) 
         		+"&month=" + (cal.get(Calendar.MONTH) + 1) 
         		+"&category=nba#";
-
+        System.out.println(url);
         Document doc = null;
         List<DayGame> gameList = new ArrayList<DayGame>();
         
@@ -115,7 +115,7 @@ public class MyController {
         }
         
         model.addAttribute("GameList", gameList);
-    	return "/scheduleAndresults";
+    	return "/calendar";
     }
     
     // 회원가입 페이지
