@@ -42,11 +42,11 @@ public class MemberService implements UserDetailsService {
                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
         
+        System.out.println(memberDto); 
         //아이디 중복시  -1반환
         if(memberRepository.findByEmail(memberDto.getEmail()).isPresent())
         	return new Long(-1);
         
-        System.out.println(memberDto); 
         //성공적으로 회원가입 완료시 그 회원의 아이디 반환(>=1)
         return memberRepository.save(memberDto.toEntity()).getId();
     }
@@ -65,7 +65,7 @@ public class MemberService implements UserDetailsService {
         System.out.println(userEntity);
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if (("admin@example.com").equals(userEmail)||("admin").equals(userEmail)) {	//비밀번호 admin으로 저장
+        if (("admin@example.com").equals(userEmail)||("admin").equals(userEmail)||("admin@1").equals(userEmail)) {	//비밀번호 admin으로 저장
             authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
         } else {
             authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));

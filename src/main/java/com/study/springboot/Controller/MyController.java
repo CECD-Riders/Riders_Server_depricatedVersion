@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.study.springboot.FTP.FTPUploader;
 import com.study.springboot.crawling.DayGame;
 import com.study.springboot.crawling.Game;
 import com.study.springboot.dto.MemberDto;
+import com.study.springboot.dto.VideoDto;
 import com.study.springboot.service.MemberService;
+import com.study.springboot.service.VideoService;
 
 import lombok.AllArgsConstructor;
 
@@ -28,7 +31,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MyController {
     private MemberService memberService;
-
+    private VideoService videoService;
+    
     // 메인 페이지
     @GetMapping("/")
     public String index(Model model) {
@@ -37,7 +41,7 @@ public class MyController {
         		+ "year=" + cal.get(Calendar.YEAR) 
         		+"&month=" + (cal.get(Calendar.MONTH) + 1) 
         		+"&category=nba#";
-
+        System.out.println(url);
         Document doc = null;
         List<DayGame> gameList = new ArrayList<DayGame>();
         
@@ -126,7 +130,7 @@ public class MyController {
 
     // 회원가입 처리
     @PostMapping("/user/signup")
-    public String execSignup(HttpServletRequest request, MemberDto memberDto, Model model) {
+    public String SignupAction(HttpServletRequest request, MemberDto memberDto, Model model) {
     	if(memberDto.getEmail().isEmpty()) {
     		model.addAttribute("errorMsg", "아이디를 입력해 주십시오.");
     		return "/signup";
@@ -166,9 +170,42 @@ public class MyController {
         return "/myinfo";
     }
 
-    // 어드민 페이지
-    @GetMapping("/admin")
-    public String dispAdmin() {
-        return "/admin";
+    // 영상전송 페이지
+    @GetMapping("/admin/videoUpload")
+    public String videoUpload() {
+        return "/videoUpload";
+    }
+    
+    // 영상전송 수행
+    @PostMapping("/admin/videoUpload")
+    public String videoUploadAction(HttpServletRequest request ,Model model) {
+    	String localPath = request.getParameter("path");		//로컬 경로 + 파일이름
+    	String fileName = request.getParameter("fileName");		//호스트 서버에 저장될 파일 이름
+    	System.out.println(localPath);
+    	System.out.println(fileName);
+    	
+    	VideoDto videoDto = new VideoDto();
+    	videoDto.setName(fileName);
+    	videoDto.setLike(new Long(0));
+    	System.out.println(videoDto);
+    	FTPUploader ftpUploader;
+		try {
+	        Long id = videoService.SaveSingeVideo(videoDto);
+			ftpUploader = new FTPUploader("112.175.184.64", "gshgsh1234", "rnjs!0831");
+	        ftpUploader.uploadFile(localPath, fileName, "/html/videoTest/");
+	        ftpUploader.disconnect();
+	        System.out.println(id);
+	        if(id == -1) {
+	        	throw new Exception();
+	        }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			model.addAttribute("succesMsg", "영상전송 실패!");
+			return "/videoUpload";
+		}
+		
+    	model.addAttribute("succesMsg", "영상전송 성공!");
+    	return "/videoUpload";
     }
 }
