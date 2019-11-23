@@ -18,6 +18,7 @@ public class FTPUploader {
     //param( host server ip, username, password )
     public FTPUploader(String host, String user, String pwd) throws Exception{
         ftp = new FTPClient();
+        ftp.setControlEncoding("euc-kr");
         ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
         int reply;
         ftp.connect(host);//호스트 연결

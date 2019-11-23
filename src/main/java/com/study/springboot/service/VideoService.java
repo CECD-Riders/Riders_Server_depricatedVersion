@@ -13,8 +13,9 @@ import lombok.AllArgsConstructor;
 public class VideoService {
 	private VideoRepository videoRepository;
 	
+	
 	@Transactional
-	public Long SaveSingeVideo(VideoDto videoDto) {
+	public Long SaveSingleVideo(VideoDto videoDto) {
         
         System.out.println(videoDto); 
         System.out.println(videoDto.getName());
@@ -25,5 +26,15 @@ public class VideoService {
         System.out.println("videoDto.toEntity()");
         System.out.println(videoDto.toEntity()); 
         return videoRepository.save(videoDto.toEntity()).getId();
+	}
+	
+	//비디오 이름으로 컬럼하나 지우기
+	@Transactional
+	public void DeleteSingleVideo(VideoDto videoDto) {
+		System.out.println(videoDto); 
+        System.out.println(videoDto.getName());
+        //이미 비디오가 데이터베이스에 있을때만 지우기
+        if(videoRepository.findByName(videoDto.getName()).isPresent())
+        	videoRepository.deleteByName(videoDto.getName());
 	}
 }

@@ -1,6 +1,8 @@
 package com.study.springboot.Controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -41,17 +43,14 @@ public class MyController {
         		+ "year=" + cal.get(Calendar.YEAR) 
         		+"&month=" + (cal.get(Calendar.MONTH) + 1) 
         		+"&category=nba#";
-        System.out.println(url);
         Document doc = null;
         List<DayGame> gameList = new ArrayList<DayGame>();
-        
         try {
             doc = Jsoup.connect(url).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
         Elements todayGame = doc.select("div.selected");
-        //System.out.println(todayGame);
         for(Element eg: todayGame) {
         	List<Game> list = new ArrayList<Game>();
         	String date = eg.select("span.td_date").text();		//경기 날짜     	
@@ -64,14 +63,37 @@ public class MyController {
         	}
         	gameList.add(new DayGame(date,list));
         }
-        System.out.println(gameList.get(0).getGameList().size());
         model.addAttribute("gameSize", gameList.get(0).getGameList().size() + 1);
         model.addAttribute("todayGame", gameList.get(0));
         return "/index";
     }
     
     @RequestMapping("/watch")
-    public String watchVideo() {
+    public String watchVideo(HttpServletRequest request, Model model) {
+    	Calendar cal = Calendar.getInstance();
+    	String useDate = Integer.toString(cal.get(Calendar.YEAR));
+    	String date = request.getParameter("date");
+    	String dateP1[] = date.split("\\s+");
+    	String dateP2[] = dateP1[0].split("\\.");
+    	
+    	String month = dateP2[0]; 
+    	String day = dateP2[1];
+    	if(month.length()==1) 
+    		month = "0"+month;
+    	if(day.length()==1)
+    		day = "0"+day;
+    	useDate = useDate + month + day;
+    	
+    	String leftTeam = request.getParameter("leftTeam");
+    	String rightTeam = request.getParameter("rightTeam");
+    	model.addAttribute("date", useDate);
+    	try {
+        	model.addAttribute("leftTeam", URLEncoder.encode(leftTeam, "EUC-KR"));
+			model.addAttribute("rightTeam", URLEncoder.encode(rightTeam, "EUC-KR"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	return "/watchVideo";
     }
     
@@ -84,8 +106,7 @@ public class MyController {
         		+"&category=nba#";
         System.out.println(url);
         Document doc = null;
-        List<DayGame> gameList = new ArrayList<DayGame>();
-        
+        List<DayGame> gameList = new ArrayList<DayGame>();     
         try {
             doc = Jsoup.connect(url).get();
         } catch (IOException e) {
@@ -179,27 +200,23 @@ public class MyController {
     // 영상전송 수행
     @PostMapping("/admin/videoUpload")
     public String videoUploadAction(HttpServletRequest request ,Model model) {
-    	String localPath = request.getParameter("path");		//로컬 경로 + 파일이름
-    	String fileName = request.getParameter("fileName");		//호스트 서버에 저장될 파일 이름
-    	System.out.println(localPath);
-    	System.out.println(fileName);
-    	
+    	String localPath = request.getParameter("path");				//로컬 경로 
+    	String HostfileName = request.getParameter("HostfileName");		//호스트 서버에 저장될 파일 이름
     	VideoDto videoDto = new VideoDto();
-    	videoDto.setName(fileName);
+    	videoDto.setName(HostfileName);
     	videoDto.setLike(new Long(0));
-    	System.out.println(videoDto);
     	FTPUploader ftpUploader;
 		try {
-	        Long id = videoService.SaveSingeVideo(videoDto);
+	        Long id = videoService.SaveSingleVideo(videoDto);
 			ftpUploader = new FTPUploader("112.175.184.64", "gshgsh1234", "rnjs!0831");
-	        ftpUploader.uploadFile(localPath, fileName, "/html/videoTest/");
+	        ftpUploader.uploadFile(localPath, HostfileName, "/html/videoTest/");
 	        ftpUploader.disconnect();
-	        System.out.println(id);
 	        if(id == -1) {
 	        	throw new Exception();
 	        }
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			videoService.DeleteSingleVideo(videoDto);
 			e.printStackTrace();
 			model.addAttribute("succesMsg", "영상전송 실패!");
 			return "/videoUpload";
@@ -208,4 +225,5 @@ public class MyController {
     	model.addAttribute("succesMsg", "영상전송 성공!");
     	return "/videoUpload";
     }
+    
 }

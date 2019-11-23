@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>비디오 시청</title>
 </head>
 <body>
 
-<video src="http://gshgsh1234.dothome.co.kr/videoTest/11.1-san-clipers.mp4" controls></video>
+<span th:text="@{'http://gshgsh1234.dothome.co.kr/videoTest/' + ${date} + '-' + ${leftTeam} + '-' + ${rightTeam} + '.PNG'}"></span>
+
+<img th:src="@{'http://gshgsh1234.dothome.co.kr/videoTest/' + ${date} + '-' + ${leftTeam} + '-' + ${rightTeam} + '.PNG'}" ></img>
 
 </body>
 </html>
