@@ -31,6 +31,6 @@ out/
 ### VS Code ###
 .vscode/
 
-application.properties
+/src/application.properties
 FTPHostInfo.java
-
+FTPHostInfo.class
