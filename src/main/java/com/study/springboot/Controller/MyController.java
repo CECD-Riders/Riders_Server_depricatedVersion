@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.study.springboot.FTP.FTPHostInfo;
 import com.study.springboot.FTP.FTPUploader;
 import com.study.springboot.crawling.DayGame;
 import com.study.springboot.crawling.Game;
@@ -94,6 +95,8 @@ public class MyController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	
+    	System.out.println(useDate + "-" +leftTeam + "-" + rightTeam + ".PNG");
     	return "/watchVideo";
     }
     
@@ -208,7 +211,8 @@ public class MyController {
     	FTPUploader ftpUploader;
 		try {
 	        Long id = videoService.SaveSingleVideo(videoDto);
-			ftpUploader = new FTPUploader("112.175.184.64", "gshgsh1234", "rnjs!0831");
+	        FTPHostInfo hostInfo = new FTPHostInfo();
+			ftpUploader = new FTPUploader(hostInfo.hostIP, hostInfo.ID, hostInfo.PW);
 	        ftpUploader.uploadFile(localPath, HostfileName, "/html/videoTest/");
 	        ftpUploader.disconnect();
 	        if(id == -1) {

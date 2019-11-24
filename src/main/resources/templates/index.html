@@ -117,7 +117,7 @@
                             	</td>
                             	<td>
                                 <span class="td_btn">
-                                	<a th:href="@{/watch}">
+                                	<a th:href="@{/watch(date=${todayGame.date}, leftTeam=${game.leftTeam}, rightTeam=${game.rightTeam})}">
                                     	<img width="61" height="23" alt="경기영상" src="https://imgsports.pstatic.net/images/section/volleyball/css/btn_vod_off.gif">
                                 	</a>
                                 </span>
@@ -142,12 +142,6 @@
             <iframe width="560" height="315" src="https://www.youtube.com/embed/suJhZQptXEU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/MdWHGiNYAwk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
-            <!--
-                <h3>Houston Rockets vs Chicago Bulls - Full Game Highlights | November 9, 2019-20 NBA Season</h3>
-                <h3>4th Quarter Team Highlights - Lakers vs. Bulls - November 5, 2019</h3>
-                <h3>May 12, 1992 Bulls vs Knicks game 5 highlights</h3>
-            -->
 
         </div>
     </div>
