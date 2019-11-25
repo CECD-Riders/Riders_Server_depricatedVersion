@@ -18,10 +18,10 @@ public class FTPUploader {
     //param( host server ip, username, password )
     public FTPUploader(String host, String user, String pwd) throws Exception{
         ftp = new FTPClient();
-        ftp.setControlEncoding("euc-kr");
+        ftp.setControlEncoding("UTF-8");
         ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
         int reply;
-        ftp.connect(host);//호스트 연결
+        ftp.connect(host,10021);//호스트 연결
         reply = ftp.getReplyCode();
         if (!FTPReply.isPositiveCompletion(reply)) {
             ftp.disconnect();

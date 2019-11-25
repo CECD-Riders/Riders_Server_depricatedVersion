@@ -89,14 +89,14 @@ public class MyController {
     	String rightTeam = request.getParameter("rightTeam");
     	model.addAttribute("date", useDate);
     	try {
-        	model.addAttribute("leftTeam", URLEncoder.encode(leftTeam, "EUC-KR"));
-			model.addAttribute("rightTeam", URLEncoder.encode(rightTeam, "EUC-KR"));
+        	model.addAttribute("leftTeam", URLEncoder.encode(leftTeam, "UTF-8"));
+			model.addAttribute("rightTeam", URLEncoder.encode(rightTeam, "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
-    	System.out.println(useDate + "-" +leftTeam + "-" + rightTeam + ".PNG");
+    	System.out.println(useDate + "-" +leftTeam + "-" + rightTeam + ".mp4");
     	return "/watchVideo";
     }
     
@@ -203,6 +203,7 @@ public class MyController {
     // 영상전송 수행
     @PostMapping("/admin/videoUpload")
     public String videoUploadAction(HttpServletRequest request ,Model model) {
+    	
     	String localPath = request.getParameter("path");				//로컬 경로 
     	String HostfileName = request.getParameter("HostfileName");		//호스트 서버에 저장될 파일 이름
     	VideoDto videoDto = new VideoDto();
@@ -213,7 +214,7 @@ public class MyController {
 	        Long id = videoService.SaveSingleVideo(videoDto);
 	        FTPHostInfo hostInfo = new FTPHostInfo();
 			ftpUploader = new FTPUploader(hostInfo.hostIP, hostInfo.ID, hostInfo.PW);
-	        ftpUploader.uploadFile(localPath, HostfileName, "/html/videoTest/");
+	        ftpUploader.uploadFile(localPath, HostfileName, "/ridersTest/");
 	        ftpUploader.disconnect();
 	        if(id == -1) {
 	        	throw new Exception();

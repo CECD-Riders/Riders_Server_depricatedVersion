@@ -6,9 +6,11 @@
 </head>
 <body>
 
-<span th:text="@{'http://gshgsh1234.dothome.co.kr/videoTest/' + ${date} + '-' + ${leftTeam} + '-' + ${rightTeam} + '.PNG'}"></span>
 
-<img th:src="@{'http://gshgsh1234.dothome.co.kr/videoTest/' + ${date} + '-' + ${leftTeam} + '-' + ${rightTeam} + '.PNG'}" ></img>
+
+<span th:text="@{'http://106.10.45.102/' + ${date} + '-' + ${leftTeam} + '-' + ${rightTeam} + '.mp4'}"></span>
+
+<video th:src="@{'http://106.10.45.102/' + ${date} + '-' + ${leftTeam} + '-' + ${rightTeam} + '.mp4'}" controls></video>
 
 </body>
 </html>
