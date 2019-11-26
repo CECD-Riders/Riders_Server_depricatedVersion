@@ -95,9 +95,13 @@ public class MyController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	System.out.println(useDate + "-" +leftTeam + "-" + rightTeam + ".mp4");
-    	return "/watchVideo";
+    	String videoName = useDate + "-" +leftTeam + "-" + rightTeam + ".mp4";
+    	System.out.println(videoName);
+    	//여기서 영상이 있는지 없는지 데이터 베이스 조회
+    	if(videoService.VideoOverlapCheck(videoName) == 1)
+    		return "/watchVideo";
+    	else
+    		return "/noVideo";	//없으면 준비중 페이지로 이동
     }
     
     @RequestMapping("/gameList")

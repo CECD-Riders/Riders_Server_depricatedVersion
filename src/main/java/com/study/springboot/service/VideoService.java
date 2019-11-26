@@ -1,8 +1,11 @@
 package com.study.springboot.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.study.springboot.domain.VideoEntity;
 import com.study.springboot.domain.VideoRepository;
 import com.study.springboot.dto.VideoDto;
 
@@ -12,8 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class VideoService {
 	private VideoRepository videoRepository;
-	
-	
+
 	@Transactional
 	public Long SaveSingleVideo(VideoDto videoDto) {
         
@@ -36,5 +38,15 @@ public class VideoService {
         //이미 비디오가 데이터베이스에 있을때만 지우기
         if(videoRepository.findByName(videoDto.getName()).isPresent())
         	videoRepository.deleteByName(videoDto.getName());
+	}
+	
+	@Transactional
+	public int VideoOverlapCheck(String videoName) {
+		Optional<VideoEntity> videoEntity = videoRepository.findByName(videoName);
+		if(videoEntity.isPresent())
+			return 1;	//있으면 1
+		else
+			return -1;	//없으면 -1
+			
 	}
 }

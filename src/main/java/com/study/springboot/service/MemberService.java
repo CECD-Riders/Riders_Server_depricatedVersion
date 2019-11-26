@@ -28,7 +28,7 @@ public class MemberService implements UserDetailsService {
     private MemberRepository memberRepository;
 
     @Transactional
-    public Long overlapCheck(String email) {
+    public Long emailOverlapCheck(String email) {
     	if(memberRepository.findByEmail(email).isPresent())
         	return new Long(-1);
     	else
