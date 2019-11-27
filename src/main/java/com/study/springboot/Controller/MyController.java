@@ -171,7 +171,7 @@ public class MyController {
 		}
 		
     	model.addAttribute("succesMsg", "영상전송 성공!");
+    	
     	return "/videoUpload";
     }
-    
 }
