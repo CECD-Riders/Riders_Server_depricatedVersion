@@ -35,4 +35,4 @@ out/
 FTPHostInfo.java
 FTPHostInfo.class
 
-src/main/resources/
+/src/main/resources/application.properties

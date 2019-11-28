@@ -50,6 +50,7 @@ li, a {
 
 li {
     margin: 15px 0 20px 0;
+    text-align: left;
 }
 
 .sidebar-menu{
@@ -116,7 +117,7 @@ button {
     left: 150px;
     height: 80%;
     
-    margin-left:5%;
+    margin-left:8%;
     padding-right:5%;
 }
 
@@ -131,12 +132,6 @@ button {
     height: auto;
 
 }
-
-.content-record i{
-    content: url(../img/data.JPG);
-}
-
-
 
 .sch_tb{
     text-align: center;

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <link rel="stylesheet" , href="/CSS/layout.css">
+</head>
+
+
+<body>
+    <div class="leftside">
+        <div class="sidebar-logo">
+            <a href="index.html"><i class="fas fa-basketball-ball fa-2x"></i></a>
+            <a href="/"><h1>POTG</h1></a>
+        </div>
+        <div class="sidebar-bdd"></div>
+        <ul class="sidebar-menu">
+            <li class = "sidevar-menu-li"><a href="/"><i class="fas fa-home"></i><span>홈</span></a></li>
+            <li class = "sidevar-menu-li"><a href="/gameList"><i class="far fa-calendar-minus"></i><span>경기 일정/결과</Video></span></a></li>
+            <li class = "sidevar-menu-li"><a href="/rank"><i class="far fa-chart-bar"></i><span>기록 / 순위</Video></span></a></li>
+            <li class = "sidevar-menu-li"><a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/videoUpload"><i class="fas fa-upload"></i><span>동영상 업로드</Video></span></a></li>
+        </ul>
+    </div>
+    <div class="content">
+    </div>
+</body>
+</html>

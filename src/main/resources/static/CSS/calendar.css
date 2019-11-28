@@ -40,7 +40,7 @@ li, a {
 }
 
 .sidebar-logo a h1{
-    margin: 15px 0 10px 10px;
+    margin: 9px 0 10px 10px;
     font-size: 25px;
 }
 
@@ -50,6 +50,7 @@ li, a {
 
 li {
     margin: 15px 0 20px 0;
+    text-align: left;
 }
 
 .sidebar-menu{
@@ -61,17 +62,17 @@ li {
     position: relative;
     width: 100%;
     left: 150px;
-    height: 59px;
+    height: 52px;
     background-color: rgb(238, 236, 236);
     
 }
 
 .head-nav{
-    padding-top: 10px;
+    padding-top: 8px;
 }
 
 .head-search {
-    height: 40px;
+    height: 35px;
     width: 500px;
     border: 1px solid #717172;
     background: #ffffff;
@@ -81,7 +82,7 @@ li {
 }
 
 input {
-    font-size: 16px;
+    font-size: 13px;
     width: 425px;
     padding: 10px;
     border: 0px;
@@ -115,28 +116,61 @@ button {
     position: relative;
     left: 150px;
     height: 80%;
-    border: 1px solid gold;
-    margin: 0px auto;
+    
+    margin-left:8%;
     padding-right:5%;
 }
 
-.content-head h3{
-    border: 1px solid gold;
+.content-head-a{
+    font-size: 13px;
+    color: #a8a8a8;
 }
 
 .content-record{
-    border: 1px solid gold;
+
     display:block;
-    height: 264px;
-    margin: 0px auto;
+    height: auto;
+
 }
 
+.sch_tb{
+    text-align: center;
+    font-size: 13px;
+}
+
+table{
+    border : none;
+}
+
+
+td{
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .bottom {
-    position: relative;
+    position: absolute;
     width: 100%;
-    left: 150px;
+    
     height: auto;
-    border: 1px solid gold;
+    background: #d0d0d3;
     text-align: center;
     color: #717172;
+    bottom: 0;
 }

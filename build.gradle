@@ -36,6 +36,8 @@ dependencies {
 	
 	implementation 'org.jsoup:jsoup:1.7.3'
 	implementation 'commons-net:commons-net:3.6'
+	
+	implementation 'org.webjars:jquery:3.4.1'
 }
 
 test {

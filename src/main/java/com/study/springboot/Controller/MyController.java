@@ -32,6 +32,16 @@ public class MyController {
     private VideoService videoService;
     private Crawler crawler;
     
+    @RequestMapping("/leftSidebar.html")
+    public String loadSidebar() {
+    	return "/leftSidebar";
+    }
+    
+    @RequestMapping("/headers.html")
+    public String loadHeader() {
+    	return "/headers";
+    }
+    
     //메인
     @GetMapping("/")
     public String index(Model model) {
@@ -49,6 +59,12 @@ public class MyController {
         
         model.addAttribute("GameList", monthGame);
     	return "/calendar";
+    }
+    
+    //기록,순위
+    @RequestMapping("/rank")
+    public String rank() {
+    	return "/rank";
     }
     
     //영상 시청
@@ -98,13 +114,13 @@ public class MyController {
     // 회원가입 처리
     @PostMapping("/user/signup")
     public String SignupAction(HttpServletRequest request, MemberDto memberDto, Model model) {
-    	if(memberDto.getEmail().isEmpty()) {
-    		model.addAttribute("errorMsg", "아이디를 입력해 주십시오.");
-    		return "/signup";
-    	}else if(memberDto.getPassword().isEmpty()) {
-    		model.addAttribute("errorMsg", "비밀번호를 입력해 주십시오.");
-    		return "/signup";
-    	}
+		/*
+		 * if(memberDto.getEmail().isEmpty()) { model.addAttribute("errorMsg",
+		 * "아이디를 입력해 주십시오."); return "/signup"; }else
+		 * if(memberDto.getPassword().isEmpty()) { model.addAttribute("errorMsg",
+		 * "비밀번호를 입력해 주십시오."); return "/signup"; }
+		 */
+    	
         Long id = memberService.joinUser(memberDto);
         if(id == -1) {//아이디 중복인 경우 => 다시 회원가입 창으로 보내주고 아이디 중복이라고 말해주자
         	model.addAttribute("errorMsg", "중복된 아이디가 있습니다!");
@@ -120,7 +136,7 @@ public class MyController {
     public String dispLogin(HttpServletRequest request ,Model model) {
     	String error = request.getParameter("error");
     	if(error != null) {//로그인 실패 상황
-    		model.addAttribute("loginFailureError", "로그인 실패");
+    		model.addAttribute("loginFailureError", "아이디나 비밀번호를 확인해 주십시오.");
     	}
         return "/login";
     }

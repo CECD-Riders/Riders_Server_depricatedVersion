@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>비디오 시청</title>
+</head>
+<body>
+
+
+
+<span th:text="@{'http://106.10.45.102/' + ${date} + '-' + ${leftTeam} + '-' + ${rightTeam} + '.mp4'}"></span>
+
+<video th:src="@{'http://106.10.45.102/' + ${date} + '-' + ${leftTeam} + '-' + ${rightTeam} + '.mp4'}" controls></video>
+
+</body>
+</html>
+

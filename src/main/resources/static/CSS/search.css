@@ -1,0 +1,86 @@
+.searchbar-container{
+    margin-top: 15px;
+}
+
+.searchbar-container-filter{
+    margin-bottom: 10px;
+}
+
+.searchbar-container-filter i{
+    cursor: pointer;
+}
+
+.searchbar-container-filter i a{
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+
+.searchbar-container-filtermenu{
+    display: none;
+    width: 100%;
+    height: 100px;
+    margin-bottom : 10px;
+}
+
+.searchbar-container-filterlist{
+    display: block;
+    float: left;
+    
+    margin-right: 25px;
+    text-align: center;
+}
+
+.searchbar-container-filterlist ul{
+    padding:0;
+    margin-top: 5px;
+}
+
+.searchbar-container-filterlist li a{
+    color: rgb(110, 106, 106);
+}
+
+.searchbar-container-filterlist h5{
+    margin-top:7px;
+    margin-bottom:7px;
+}
+
+.search-container{
+    display: block;
+}
+
+.search-list-head{
+    border-bottom:1px solid rgb(214, 211, 211);
+}
+
+video{
+    width: 310px;
+    height: 175px;
+    margin-top: 0;
+}
+
+.search-list-group{
+    padding: 10px 10px 8px 10px;
+    display: block;
+    width: auto;
+    height: 180px;
+    border-bottom:1px solid rgb(214, 211, 211);
+}
+
+.search-list-group-video{
+    position: absolute;
+    left: 0;
+    display: inline-block;
+}
+
+.search-list-group-comment{
+    position: absolute;
+    display: block;
+    margin-left: 320px;
+    
+}
+
+.search-list-group-comment-videoname{
+    font-size: 20px;
+    margin-bottom:10px;
+}

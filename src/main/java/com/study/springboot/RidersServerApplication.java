@@ -17,7 +17,7 @@ public class RidersServerApplication {
 	@Bean
     public ViewResolver viewResolver() {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        templateResolver.setTemplateMode("XHTML");
+        templateResolver.setTemplateMode("HTML");
         templateResolver.setPrefix("templates/");
         templateResolver.setSuffix(".html");
         SpringTemplateEngine engine = new SpringTemplateEngine();

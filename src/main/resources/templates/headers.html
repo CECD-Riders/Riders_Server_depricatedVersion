@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <link rel="stylesheet" , href="/CSS/layout.css">
+    <script src="/JS/jquery-3.4.1.min.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            $(".head-menu-islogin>button").click(function () {
+                var submenu = $(".head-menu-islogin>ul");
+                if (submenu.is(":visible")) {
+                    submenu.slideUp();
+                } else {
+                    submenu.slideDown();
+                }
+            });
+        });
+    </script>
+
+
+</head>
+
+<body>
+    <div class="head">
+        <div class="head-nav">
+            <!--Searchbar-->
+            <div class="head-search">
+                <input type="text" placeholder="Search for..">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <!--End Searchbar-->
+            <nav class="head-nav2">
+                <ul class="head-menu">
+                    <li class="head-menu-signin">
+                        <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+                    </li>
+
+                    <li class="head-menu-islogin">
+                        <button>
+                            <i class="head-menu-islogin-userprofile"></i>
+                        </button>
+                        <ul>
+                            <li><i class = "far fa-user" style="color:white; margin-right: 5px;"></i><a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/user/info}">마이페이지</a></li>
+                            <li><i class = "fas fa-sign-out-alt" style=" color:white; margin-right: 5px;" ></i><a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</body>
+
+</html>
