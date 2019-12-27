@@ -1,137 +1,156 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+	xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta charset="UTF-8">
-    <title>POTG</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-    <link rel="stylesheet" href="/CSS/index.css">
-    <link rel="stylesheet" href="/CSS/tb_calendar.css">
-    <script src="/JS/jquery-3.4.1.min.js"></script>
-    
-    <!--Load HTML Files-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#leftSidebar").load("leftSidebar.html");
-            $("#headers").load("headers.html");
-        });
-    </script>
+<meta charset="UTF-8">
+<title>POTG</title>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="/CSS/index.css">
+<link rel="stylesheet" href="/CSS/tb_calendar.css">
+<script src="/JS/jquery-3.4.1.min.js"></script>
+
+<!--Load HTML Files-->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#leftSidebar").load("leftSidebar.html");
+		$("#headers").load("headers.html");
+	});
+</script>
 </head>
 
 <body>
-    <div id="leftSidebar"></div>
-    <div id="headers"></div>
+	<div id="leftSidebar"></div>
+	<div id="headers"></div>
 
-    <div class="content">
-        <div class="content-head">
-            <h3>오늘 경기 일정/결과 <a href="/gameList" class="content-head-a">전체 경기 일정/결과</a></h3>
-        </div>
-        <div class="content-today_calendar">
-            <!--Naver sport_nba crawling-->
+	<div class="content">
+		<div class="content-head">
+			<h3>
+				오늘 경기 일정/결과 <a href="/gameList" class="content-head-a">전체 경기
+					일정/결과</a>
+			</h3>
+		</div>
+		<div class="content-today_calendar">
+			<!--Naver sport_nba crawling-->
 			<div class="sch_tb ">
-                <table cellspacing="0" border="1">
-                    <colgroup>
-                        <col width="100">
-                        <col width="55">
-                        <col width = 400>
-                        <col width="166">
-                        <col width="250">
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            
-                            <td th:rowspan="${gameSize}"><span class="td_date" th:text="${todayGame.date}"></span></td>
-                        </tr> 
-                           
-                        <div th:each="game : ${todayGame.gameList}">  
-                        	<tr>
-                            	<td><span class="td_hour" th:text="${game.time}"></span></td>
-                           		<td><span class="team_lft" th:text="${game.leftTeam}"></span>
-                                        <strong class="td_score" th:text="${game.score}"></strong>
-                                <span class="team_rgt" th:text="${game.rightTeam}"></span>
-                            	</td>
-                            	<td>
-                                <span class="td_btn">
-                                	<a th:href="@{/watch(date=${todayGame.date}, leftTeam=${game.leftTeam}, rightTeam=${game.rightTeam})}">
-                                    	<img width="61" height="23" alt="경기영상" src="https://imgsports.pstatic.net/images/section/volleyball/css/btn_vod_off.gif">
-                                	</a>
-                                </span>
-                            	</td>
-                            	<td>
-                                	<span class="td_stadium" th:text="${game.stadium}"></span>
-                            	</td>
-                        	</tr>
-                        </div>
-                    </tbody>
-                </table>
-            </div>
-            <!--END Naver sport_nba crawling-->
-        </div>
+				<table cellspacing="0" border="1">
+					<colgroup>
+						<col width="100">
+						<col width="55">
+						<col width=400>
+						<col width="166">
+						<col width="250">
+					</colgroup>
+					<tbody>
+						<tr>
+
+							<td th:rowspan="${gameSize}"><span class="td_date"
+								th:text="${todayGame.date}"></span></td>
+						</tr>
+
+						<div th:each="game : ${todayGame.gameList}">
+							<tr>
+								<td><span class="td_hour" th:text="${game.time}"></span></td>
+								<td><span class="team_lft" th:text="${game.leftTeam}"></span>
+									<strong class="td_score" th:text="${game.score}"></strong> <span
+									class="team_rgt" th:text="${game.rightTeam}"></span></td>
+								<td><span class="td_btn"> <a
+										th:href="@{/watch(date=${todayGame.date}, leftTeam=${game.leftTeam}, rightTeam=${game.rightTeam})}">
+											<img width="61" height="23" alt="경기영상"
+											src="https://imgsports.pstatic.net/images/section/volleyball/css/btn_vod_off.gif">
+									</a>
+								</span></td>
+								<td><span class="td_stadium" th:text="${game.stadium}"></span>
+								</td>
+							</tr>
+						</div>
+					</tbody>
+				</table>
+			</div>
+			<!--END Naver sport_nba crawling-->
+		</div>
 
 
 
-        <div class="content-head">
-            <h3>인기 영상</h3>
-        </div>
+		<div class="content-head">
+			<h3>인기 영상</h3>
+		</div>
 
-        <div class="content-hotvideo">
-            <div class="content-hotvideo-group">
-                <video controls>
-                    <source src="../video/data1.mp4" type="video/mp4">
-                </video>
-                <p class="content-hotvideo-group-videotext"><a href="#">video name </a></p>
-            </div>
-            <div class="content-hotvideo-group">
-                <video controls>
-                    <source src="../video/data2.mp4" type="video/mp4">
-                </video>
-                <p class="content-hotvideo-group-videotext"><a href="#">video name </a></p>
-            </div>
-            <div class="content-hotvideo-group">
-                <video controls>
-                    <source src="../video/data3.mp4" type="video/mp4">
-                </video>
-                <p class="content-hotvideo-group-videotext"><a href="#">video name </a></p>
-            </div>
-            <div class="content-hotvideo-group">
-                <video controls>
-                    <source src="../video/data4.mp4" type="video/mp4">
-                </video>
-                <p class="content-hotvideo-group-videotext"><a href="#">video name </a></p>
-            </div>
-        </div>
+		<div class="content-hotvideo">
+			<div class="content-hotvideo-group">
+				<video controls>
+					<source src="../video/data1.mp4" type="video/mp4">
+				</video>
+				<p class="content-hotvideo-group-videotext">
+					<a href="#">video name </a>
+				</p>
+			</div>
+			<div class="content-hotvideo-group">
+				<video controls>
+					<source src="../video/data2.mp4" type="video/mp4">
+				</video>
+				<p class="content-hotvideo-group-videotext">
+					<a href="#">video name </a>
+				</p>
+			</div>
+			<div class="content-hotvideo-group">
+				<video controls>
+					<source src="../video/data3.mp4" type="video/mp4">
+				</video>
+				<p class="content-hotvideo-group-videotext">
+					<a href="#">video name </a>
+				</p>
+			</div>
+			<div class="content-hotvideo-group">
+				<video controls>
+					<source src="../video/data4.mp4" type="video/mp4">
+				</video>
+				<p class="content-hotvideo-group-videotext">
+					<a href="#">video name </a>
+				</p>
+			</div>
+		</div>
 
-        <div class="content-head">
-            <h3>최신 영상</h3>
-        </div>
-        <div class="content-hotvideo">
-            <div class="content-hotvideo-group">
-                <video controls>
-                    <source src="../video/data1.mp4" type="video/mp4">
-                </video>
-                <p class="content-hotvideo-group-videotext"><a href="#">video name </a></p>
-            </div>
-            <div class="content-hotvideo-group">
-                <video controls>
-                    <source src="../video/data2.mp4" type="video/mp4">
-                </video>
-                <p class="content-hotvideo-group-videotext"><a href="#">video name </a></p>
-            </div>
-            <div class="content-hotvideo-group">
-                <video controls>
-                    <source src="../video/data3.mp4" type="video/mp4">
-                </video>
-                <p class="content-hotvideo-group-videotext"><a href="#">video name </a></p>
-            </div>
-            <div class="content-hotvideo-group">
-                <video controls>
-                    <source src="../video/data4.mp4" type="video/mp4">
-                </video>
-                <p class="content-hotvideo-group-videotext"><a href="#">video name </a></p>
-            </div>
-        </div>
+		<div class="content-head">
+			<h3>최신 영상</h3>
+		</div>
+		<div class="content-hotvideo">
+			<div class="content-hotvideo-group">
+				<video controls>
+					<source src="../video/data1.mp4" type="video/mp4">
+				</video>
+				<p class="content-hotvideo-group-videotext">
+					<a href="#">video name </a>
+				</p>
+			</div>
+			<div class="content-hotvideo-group">
+				<video controls>
+					<source src="../video/data2.mp4" type="video/mp4">
+				</video>
+				<p class="content-hotvideo-group-videotext">
+					<a href="#">video name </a>
+				</p>
+			</div>
+			<div class="content-hotvideo-group">
+				<video controls>
+					<source src="../video/data3.mp4" type="video/mp4">
+				</video>
+				<p class="content-hotvideo-group-videotext">
+					<a href="#">video name </a>
+				</p>
+			</div>
+			<div class="content-hotvideo-group">
+				<video controls>
+					<source src="../video/data4.mp4" type="video/mp4">
+				</video>
+				<p class="content-hotvideo-group-videotext">
+					<a href="#">video name </a>
+				</p>
+			</div>
+		</div>
 
-    </div>
+	</div>
 </body>
 
 </html>

@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>어드민</title>
-    
 </head>
 <body>
     <h1>어드민 페이지입니다. 영상 업로드 테스트 중입니다.</h1>
     <hr>
     
-    <form th:action="@{/admin/videoUpload}" method="post">
+    <form th:action="@{/admin/videoUpload}" method="post" enctype="multipart/form-data">
 		<tr>
 			<td> local파일 경로 </td>
 			<td> <input type="text" name="path" size="100"> </td>
-
 		</tr>
 		<br>
 		<tr>
@@ -24,9 +22,10 @@
 		<button type="submit">전송</button>
 		
 		<br>
+		
 		<a th:text="${succesMsg}"></a>	
 	</form>
-	
-	
+
+
 </body>
 </html>

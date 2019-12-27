@@ -2134,15 +2134,24 @@
 
     <script type="text/javascript" id="undefined" src="https://ssl.pstatic.net/static/common/js/cs_ops_webncc.js"></script>
     <script src="https://ssl.pstatic.net/static.gn/js/clickcrD.js" id="gnb_clickcrD" charset="utf-8"></script>
+
 </head>
 
 <body>
     <div id="leftSidebar"></div>
     <div id="headers"></div>
-
+    
     <div class="content">
         <div class="content-head">
             <h3>전체 경기 일정/결과</h3>
+            <h3 th:text="${currentYear} + '-' + ${currentMonth}"></h3>
+            
+            <a th:href="@{/gameList(year=${nextYear}, month=${nextMonth})}">
+            	<button >next</button> 
+            </a>            
+            <a th:href="@{/gameList(year=${beforeYear}, month=${beforeMonth})}">
+            	<button >before</button> 
+            </a>
         </div>
         <div class="content-record">
             <!--크롤링-->
@@ -2172,6 +2181,7 @@
                         </thead>
                     </table>
                 </div>
+                
 				<div th:each="dayGame : ${GameList}">
                 <div class="sch_tb ">
                     <table cellspacing="0" border="1">

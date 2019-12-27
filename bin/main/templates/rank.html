@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -23,12 +23,39 @@
     <div class="content">
         <div class="content-head">
             <h3>기록 / 순위</h3>
+            <h3 th:text="${currentYear-1} + '-' + ${currentYear}"></h3>
+            
+            <span th:if="${nextYear!=0}">
+            <a th:href="@{/rank(year=${nextYear},conference=${conference})}">
+            	<button >next</button> 
+            </a>                  	
+            </span>      
+      		<span th:if="${beforeYear!=0}">
+            <a th:href="@{/rank(year=${beforeYear},conference=${conference})}">
+            	<button >before</button> 
+            </a>       		
+      		</span>
+			
+			<td>
+			<a th:href="@{/rank(year=${currentYear},conference=EAST)}">
+            	<button >동부</button> 
+            </a>  
+            <a th:href="@{/rank(year=${currentYear},conference=WEST)}">
+            	<button >서부</button> 
+            </a>  
+            </td>
         </div>
         <div class="content-record">
             <!--크롤링-->
+            <span th:text="${conference}"></span>
+			<div th:each="teamRank : ${teamRankList}">
+				<td><span th:text="${teamRank.name} + '-' + ${teamRank.division} + '-' + ${teamRank.winningStreak}"></span></td>
+			</div>
 
-
-
+			<span th:text="개인순위"></span>
+			<div th:each="individualRank : ${individualRankList}">
+				<td><span th:text="${individualRank.name} + '-' + ${individualRank.gameCount} + '-' + ${individualRank.freeDrawSucessRate}"></span></td>
+			</div>
             <!--END 크롤링-->
         </div>
 

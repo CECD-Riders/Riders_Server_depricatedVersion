@@ -9,7 +9,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class Crawler {
@@ -43,11 +45,10 @@ public class Crawler {
         return gameList.get(0);
 	}
 	
-	public List<DayGame> GetMonthGame(){
-		Calendar cal = Calendar.getInstance();
+	public List<DayGame> GetYearAndMonthGame(int year,int month){
         String url = "https://sports.news.naver.com/basketball/schedule/index.nhn?"
-        		+ "year=" + cal.get(Calendar.YEAR) 
-        		+"&month=" + (cal.get(Calendar.MONTH) + 1) 
+        		+ "year=" + year
+        		+"&month=" + month
         		+"&category=nba#";
         Document doc = null;
         List<DayGame> gameList = new ArrayList<DayGame>();     
@@ -84,5 +85,62 @@ public class Crawler {
         }
         return gameList;
 	}
+	
+	public Pair<List<TeamRank>,List<IndividualRank>> GetTeamAndIndividualRank(int year, String conference)
+	{		
+		String url = "https://sports.news.naver.com/basketball/record/index.nhn?category=nba&"
+				+ "year=" + year
+				+ "&conference=" + conference;
+		Document doc = null;
+        List<TeamRank> teamRankList = new ArrayList<TeamRank>(); 
+        List<IndividualRank> individualRankList = new ArrayList<IndividualRank>();
+        try {
+            doc = Jsoup.connect(url).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }        
+        //팀기록
+        Elements teamRankBox = doc.select("#regularTeamRecordList_table");
+    	Elements teams = teamRankBox.select("tr");
+        for(int i = 0 ; i < 15;i++) {
+        	teamRankList.add(new TeamRank(
+					 teams.get(i).select("td").get(0).text(),
+					 teams.get(i).select("td").get(1).text(),
+					 teams.get(i).select("td").get(2).text(),
+					 teams.get(i).select("td").get(3).text(),
+					 teams.get(i).select("td").get(4).text(),
+					 teams.get(i).select("td").get(5).text(),
+					 teams.get(i).select("td").get(6).text(),
+					 teams.get(i).select("td").get(7).text(),
+					 teams.get(i).select("td").get(8).text(),
+					 teams.get(i).select("td").get(9).text(),
+					 teams.get(i).select("td").get(10).text(),
+					 teams.get(i).select("td").get(11).text(),
+					 teams.get(i).select("td").get(12).text(),
+					 teams.get(i).select("td").get(13).text()));
+        }
+        //선수 개인기록
+        Elements individualRankBox = doc.select("#playerRecordTable");
+        Elements individuals = individualRankBox.select("tr");
+        for(int i = 0 ; i < 20;i++) {
+        	individualRankList.add(new IndividualRank(
+        			individuals.get(i).select("td").get(0).text(),
+        			individuals.get(i).select("td").get(1).text(),
+        			individuals.get(i).select("td").get(2).text(),
+        			individuals.get(i).select("td").get(3).text(),
+        			individuals.get(i).select("td").get(4).text(),
+        			individuals.get(i).select("td").get(5).text(),
+        			individuals.get(i).select("td").get(6).text(),
+        			individuals.get(i).select("td").get(7).text(),
+        			individuals.get(i).select("td").get(8).text(),
+        			individuals.get(i).select("td").get(9).text(),
+        			individuals.get(i).select("td").get(10).text(),
+        			individuals.get(i).select("td").get(11).text(),
+        			individuals.get(i).select("td").get(12).text()));
+        }
+        return Pair.of(teamRankList, individualRankList);
+	}
+	
+	
 	
 }
